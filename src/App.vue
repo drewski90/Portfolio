@@ -1,15 +1,59 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <v-app id="inspire">
+
+    <v-app-bar color="black">
+      <v-app-bar-title class="text-left">Andrew Martinez</v-app-bar-title>
+      <v-spacer/>
+      <v-btn icon @click="toggleTheme"><v-icon>mdi-lightbulb</v-icon></v-btn>
+    </v-app-bar>
+
+    <div class="mt-0">
+
+      <StarHeader />
+      <ShowcaseList :value="showcase" />
+      <SkillsList />
+
+    </div>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import StarHeader from './components/StarHeader.vue'
+import ShowcaseList from './components/ShowcaseList.vue'
+import showcase from "./showcase"
+import SkillsList from './components/SkillsList.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    ShowcaseList,
+    StarHeader,
+    SkillsList
+},
+  data() {
+    return {
+      drawer: false,
+      showcase
+    }
+  },
+  mounted() {
+    this.theme = 'dark'
+  },
+  methods: {
+    toggleTheme() {
+      this.theme = this.theme === "dark"? "light": "dark"
+    }
+  },
+  computed: {
+    theme: {
+      get() {
+        return this.$vuetify.theme.name
+      },
+      set(v) {
+        this.$vuetify.theme.name = v
+      }
+    }
   }
 }
 </script>
